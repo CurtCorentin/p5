@@ -22,7 +22,7 @@ const DISPLAYPRODUITS = async () =>
       <h3 class="productName">${produits.name}</h3>
       <p class="productDescription">${produits.description}</p>
     </article>
-    </a>`);
+    </a>`).join("");
  
 };
 

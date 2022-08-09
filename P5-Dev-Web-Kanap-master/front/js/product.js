@@ -53,35 +53,50 @@ const FUSIONPRODUITCOULEUR = Object.assign({},produitData,{
     quantite:`${quantite.value}`,
 });
 
-    produitsTableau = [];
-    produitsTableau.push(FUSIONPRODUITCOULEUR);
    
-    
-    
+   
 
-
-
-    if (localStorage.getItem(produitsTableau._id) !== null) {
-      
-        console.log('le canapé existe ds le localstorage');
-    }
-       else {
+    if (produitsTableau == null) {
         console.log('canapé non acheté encore',);
-        localStorage.setItem("produit",JSON.stringify(produitsTableau));}
-   
-
-
+        produitsTableau = [];
+        produitsTableau.push(FUSIONPRODUITCOULEUR);
+        localStorage.setItem("produit",JSON.stringify(produitsTableau));
+        
+    }else if (produitsTableau != null) {
+        for (let i = 0; i < produitsTableau.length; i++) {
+            if (produitsTableau[i]._id == produitData._id &&
+                produitsTableau[i].couleur == select.value ){
+                    return(produitsTableau[i].quantite++,
+                        console.log("coucou"),
+                        console.log(produitsTableau[i]),
+                        localStorage.setItem("produit",JSON.stringify(produitsTableau)),
+                        (produitsTableau = JSON.parse(localStorage.getItem("produit")))
+                        );
+                }
+                for (let i = 0; i < produitsTableau.length; i++) {
+                    if(produitsTableau[i]._id == produitData._id &&
+                        produitsTableau[i].couleur != select.value 
+                          ){
+                            return (console.log("nouveau") ,
+                            console.log(produitsTableau),
+                            produitsTableau.push(FUSIONPRODUITCOULEUR),
+                            localStorage.setItem("produit",JSON.stringify(produitsTableau)),
+                            produitsTableau = JSON.parse(localStorage.getItem("produit"))
+                            )
+                        }if(produitsTableau[i]._id != produitData._id ){
+                            return (console.log("NOUVEAU") ,
+                            console.log(produitsTableau),
+                            produitsTableau.push(FUSIONPRODUITCOULEUR),
+                            localStorage.setItem("produit",JSON.stringify(produitsTableau)),
+                            produitsTableau = JSON.parse(localStorage.getItem("produit"))
+                            )
+                        }
+                }
+        } 
+     }
 
 
 }); 
  return (produitsTableau = JSON.parse(localStorage.getItem("produit")));
 };
 
-/*if (localStorage.getItem(numeroproduit) !== null) {
-    console.log('le canapé existe ds le localstorage');
-} else {
-    console.log('canapé non acheté encore');
-
-
-    liée L'ID
-}*/

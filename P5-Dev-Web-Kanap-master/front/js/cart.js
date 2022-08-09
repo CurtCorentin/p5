@@ -1,36 +1,39 @@
 let ADDPRODUITS = JSON.parse(localStorage.getItem("produit"));
 console.log(ADDPRODUITS);
-console.log(ADDPRODUITS[0]);
-let totalPanier = ADDPRODUITS[0].quantite * ADDPRODUITS[0].price ;
+
+let totalPanier = ADDPRODUITS[i].quantite * ADDPRODUITS[i].price ;
 
 const DISPLAYPRODUITS = () => {
 
+  
+for(let i = 0; i < ADDPRODUITS.length; i++) {
 
-document.getElementById("cart__items").innerHTML =
- `<article class="cart__item" data-id="${ADDPRODUITS[0]._id}" data-color="${ADDPRODUITS[0].couleur}">
+cart__items.innerHTML = ADDPRODUITS.map((produit) =>
+`<article class="cart__item" data-id="${ADDPRODUITS._id}" data-color="${ADDPRODUITS[i].couleur}">
 <div class="cart__item__img">
-  <img src="${ADDPRODUITS[0].imageUrl}" alt="${ADDPRODUITS[0].altTxt}">
+  <img src="${ADDPRODUITS[0].imageUrl}" alt="${ADDPRODUITS[i].altTxt}">
 </div>
 <div class="cart__item__content">
   <div class="cart__item__content__description">
-    <h2>${ADDPRODUITS[0].name}</h2>
-    <p>${ADDPRODUITS[0].couleur}</p>
-    <p>${ADDPRODUITS[0].price}$</p>
+    <h2>${ADDPRODUITS[1].name}</h2>
+    <p>${ADDPRODUITS[i].couleur}</p>
+    <p>${ADDPRODUITS[i].price}$</p>
   </div>
   <div class="cart__item__content__settings">
     <div class="cart__item__content__settings__quantity">
       <p>Qté : </p>
-      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${ADDPRODUITS[0].quantite}">
+      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${ADDPRODUITS[i].quantite}">
     </div>
     <div class="cart__item__content__settings__delete">
       <p class="deleteItem">Supprimer</p>
     </div>
   </div>
 </div>
-</article>`;
+</article>`,);
 
 document.getElementById("totalPrice").innerText = `${totalPanier}`;
-document.getElementById("totalQuantity").innerText = `${ADDPRODUITS[0].quantite}`;
+document.getElementById("totalQuantity").innerText = `${ADDPRODUITS[i].quantite}`;
+}
 };
 
 DISPLAYPRODUITS();
