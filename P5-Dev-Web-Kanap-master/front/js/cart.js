@@ -24,8 +24,10 @@ cart__items.innerHTML = ADDPRODUITS.map((produit) =>
   </div>
 </div>
 </article>`,);
-let totalPanier = ADDPRODUITS.quantite * ADDPRODUITS.price ;
-document.getElementById("totalPrice").innerText = `${totalPanier}`;
-document.getElementById("totalQuantity").innerText = `${produit.quantite}`;
 };
 DISPLAYPRODUITS();
+
+/*
+  let totalPanier = ADDPRODUITS[0].quantite * ADDPRODUITS[0].price ;
+totalPrice.innerText = `${totalPanier}`;
+totalQuantity.innerText = `${ADDPRODUITS[0].quantite}`;*/

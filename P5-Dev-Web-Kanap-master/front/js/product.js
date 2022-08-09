@@ -9,18 +9,17 @@ const FETCHPRODUITS = async () => {
     .then((res) => res.json())
     .then((promise) => {
         produitData = promise;});
-        
         };
     FETCHPRODUITS ();
 
     const DISPLAYPRODUITS = async () => { 
     await FETCHPRODUITS(); 
- document.getElementById("IMAGE").innerHTML = 
+ IMAGE.innerHTML = 
  ` <img src="${produitData.imageUrl}" alt="${produitData.altTxt}"/>`;
 
-   document.getElementById("title").innerText = `${produitData.name.toUpperCase()} `;
-   document.getElementById("price").innerText = `${produitData.price} `;
-   document.getElementById("description").innerText = `${produitData.description} `;
+   title.innerText = `${produitData.name.toUpperCase()} `;
+   price.innerText = `${produitData.price} `;
+   description.innerText = `${produitData.description} `;
 
   let select = document.getElementById("colors");
  produitData.colors.forEach((color) => {
@@ -46,7 +45,6 @@ const envoieAuPanier = () => {
     
     let select = document.getElementById("colors");
     let quantite = document.getElementById("quantity");
-let id = PRODUIT;
 
 const FUSIONPRODUITCOULEUR = Object.assign({},produitData,{
     couleur:`${select.value}`,
