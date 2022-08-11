@@ -24,10 +24,32 @@ cart__items.innerHTML = ADDPRODUITS.map((produit) =>
   </div>
 </div>
 </article>`,);
+//////////////////////////////////////////////////////////////////////////////////////////////
+//Total panier
+
+
+let quantitePanier = [];
+let prixPanier = []; 
+ADDPRODUITS.map((produit) =>
+{ 
+let calculPanier = (produit.price * produit.quantite);
+
+  prixPanier.push(calculPanier);
+  quantitePanier.push(produit.quantite);
+  
+  console.log(quantitePanier);
+  console.log(prixPanier);
+  console.log(calculPanier);
+
+  totalQuantity.textContent = `${eval(quantitePanier.join("+"))}`;
+totalPrice.textContent = `${eval(prixPanier.join("+"))}`;
+})
+
 };
 DISPLAYPRODUITS();
 
-/*
-  let totalPanier = ADDPRODUITS[0].quantite * ADDPRODUITS[0].price ;
-totalPrice.innerText = `${totalPanier}`;
-totalQuantity.innerText = `${ADDPRODUITS[0].quantite}`;*/
+
+
+
+
+

@@ -1,6 +1,4 @@
 let produits = [];
-
-
 //////recuperation donne api + rajouter a la variable produits
 const FETCHPRODUITS = async () => { 
 await fetch(`http://localhost:3000/api/products`)
