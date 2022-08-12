@@ -31,7 +31,7 @@ const FETCHPRODUITS = async () => {
     tagOption.value=`${color}`;
     select.appendChild(tagOption);
  })
- envoieAuPanier();
+
 };
 
 DISPLAYPRODUITS (); 
@@ -50,32 +50,31 @@ const FUSIONPRODUITCOULEUR = Object.assign({},produitData,
     {couleur:`${select.value}`,
     quantite:`${quantite.value}`,});
 
-    if (produitsTableau == null) 
+    if (produitsTableau == null && quantite.value > 0 ) 
     {
         console.log('canapé non acheté encore',);
         produitsTableau = [];
         produitsTableau.push(FUSIONPRODUITCOULEUR);
         localStorage.setItem("produit",JSON.stringify(produitsTableau));
         
-    }else if (produitsTableau != null) 
+    }else if (produitsTableau != null ) 
     {
         for (let i = 0; i < produitsTableau.length; i++) 
         {
-            if (produitsTableau[i]._id == produitData._id &&
-                produitsTableau[i].couleur == select.value )
-                {
-                    return(produitsTableau[i].quantite++,
+            if (PRODUIT == produitsTableau[i]._id &&
+                select.value == produitsTableau[i].couleur )
+                {return(
+                    produitsTableau[i].quantite++,
                         console.log("coucou"),
+                        console.log(select.value),
                         console.log(produitsTableau[i]),
                         localStorage.setItem("produit",JSON.stringify(produitsTableau)),
-                        (produitsTableau = JSON.parse(localStorage.getItem("produit")))
-                        );
+                        produitsTableau = JSON.parse(localStorage.getItem("produit")))
                 }
-                
-                    if(produitsTableau[i]._id == produitData._id &&
-                        produitsTableau[i].couleur != select.value || produitsTableau[i]._id != produitData._id)
-                          {
-                            return (console.log("nouveau") ,
+                 else if(PRODUIT == produitsTableau[i]._id &&  select.value !=  produitsTableau[i].couleur
+                    && quantite.value > 0 ||  produitsTableau[i]._id != PRODUIT && quantite.value > 0)
+                          {return(
+                            console.log("nouveau") ,
                             console.log(produitsTableau),
                             produitsTableau.push(FUSIONPRODUITCOULEUR),
                             localStorage.setItem("produit",JSON.stringify(produitsTableau)),
@@ -87,6 +86,6 @@ const FUSIONPRODUITCOULEUR = Object.assign({},produitData,
         } 
      }
 })
- return (produitsTableau = JSON.parse(localStorage.getItem("produit")));
+ produitsTableau = JSON.parse(localStorage.getItem("produit"));
 };
-
+envoieAuPanier();
