@@ -13,8 +13,6 @@ const FETCHPRODUITS = async () => {
 
     FETCHPRODUITS ();
 
-
-
     const DISPLAYPRODUITS = async () => 
     { 
     await FETCHPRODUITS(); 
@@ -46,46 +44,44 @@ const envoieAuPanier = () =>
     let select = document.getElementById("colors");
     let quantite = document.getElementById("quantity");
 
-const FUSIONPRODUITCOULEUR = Object.assign({},produitData,
-    {couleur:`${select.value}`,
-    quantite:`${quantite.value}`,});
+const FUSIONPRODUITCOULEUR = [
+    `${select.value}`,
+    `${quantite.value}` ];
 
-    if (produitsTableau == null && quantite.value > 0 ) 
+    if (quantite.value <= 0 ) 
     {
-        console.log('canapé non acheté encore',);
-        produitsTableau = [];
-        produitsTableau.push(FUSIONPRODUITCOULEUR);
-        localStorage.setItem("produit",JSON.stringify(produitsTableau));
-        
-    }else if (produitsTableau != null ) 
-    {
-        for (let i = 0; i < produitsTableau.length; i++) 
-        {
-            if (PRODUIT == produitsTableau[i]._id &&
-                select.value == produitsTableau[i].couleur )
-                {return(
-                    produitsTableau[i].quantite++,
-                        console.log("coucou"),
-                        console.log(select.value),
-                        console.log(produitsTableau[i]),
-                        localStorage.setItem("produit",JSON.stringify(produitsTableau)),
-                        produitsTableau = JSON.parse(localStorage.getItem("produit")))
-                }
-                 else if(PRODUIT == produitsTableau[i]._id &&  select.value !=  produitsTableau[i].couleur
-                    && quantite.value > 0 ||  produitsTableau[i]._id != PRODUIT && quantite.value > 0)
-                          {return(
-                            console.log("nouveau") ,
-                            console.log(produitsTableau),
-                            produitsTableau.push(FUSIONPRODUITCOULEUR),
-                            localStorage.setItem("produit",JSON.stringify(produitsTableau)),
-                            produitsTableau = JSON.parse(localStorage.getItem("produit")))
-                        }
+        return false;
+    } 
+    if (localStorage.getItem(PRODUIT+select.value) != null  )
+                { let quantiteActuel =                  parseInt(JSON.parse(localStorage.getItem(PRODUIT+select.value))[1],10);
+       //  `${eval((localStorage.getItem(PRODUIT.value+select.value).join("+"))}`
+                 quantite.value =  quantite.value + quantiteActuel ;
+                   
+                return(
+                   
 
-                       
+                        localStorage.setItem(PRODUIT+select.value,JSON.stringify(FUSIONPRODUITCOULEUR),
                 
-        } 
-     }
+        
+                        ));
+                }
+                 else {return(
+                            console.log("nouveau") ,
+                            localStorage.setItem(PRODUIT+select.value,JSON.stringify(FUSIONPRODUITCOULEUR)),
+                            console.log(localStorage.getItem(PRODUIT+select.value)),
+                            console.log(localStorage.getItem(PRODUIT[0])),
+                            console.log(localStorage.getItem(PRODUIT[1]))
+                            ); }
 })
- produitsTableau = JSON.parse(localStorage.getItem("produit"));
 };
 envoieAuPanier();
+
+
+
+/*Etape 1, on reçoit l'identifiant du produit choisi (PRODUIT)
+Vérifier s'il est ou pas dans le localStorage (getItem)
+Etape 2
+Si le getItem donne null
+	Ajouter faire un setItem dans le localStorage avec les nouvelles données
+Si le getItem donne autre chose que null
+	Faire un setItem dans le localStorage en modifiant la quantité par ancienne quantité+nouvelle quantité */
