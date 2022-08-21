@@ -1,88 +1,96 @@
-let ADDPRODUITS = [];
 
-const FETCHPRODUITS = async () => { 
- await fetch(`http://localhost:3000/api/products`)
+let idCouleur = []; 
+
+const RECUPERATION = async () => {
+   let prixPanier = 0;
+  let quantitePanier = 0;
+
+    for (i=0; i<localStorage.length; i++)  
+    {  
+       let key = localStorage.key(i);  
+       let idCouleur  = JSON.parse(localStorage.getItem(key));
+       quantitePanier = quantitePanier + parseInt(idCouleur.quantite, 10); 
+let KEY = key; 
+let keyId = key.substring(0, 32);
+let keyColor= key.substring(32, key.length);
+ console.log(key,"key");
+     await fetch(`http://localhost:3000/api/products/${keyId}`)
   .then((res) => res.json())
   .then((promise) => {
       produitData = promise;});
-};
-  FETCHPRODUITS();
 
-  Recuperation =async () => {
-    await FETCHPRODUITS();
-    console.log(produitData);
-      for (let i = 0; i < produitData.length; i++ ) {for (let j = 0; j < produitData[i].colors.length; j++) {
+prixPanier = prixPanier+ parseInt(idCouleur.quantite, 10) * parseInt(produitData.price,10);
 
-        let addproduit = JSON.parse(localStorage.getItem(produitData[i]._id+produitData[i].colors[j]));
-        if (addproduit == null){
-}else{
-  ADDPRODUITS.push(addproduit);
-}}
-}
+let article = document.createElement("section");
 
-console.log(ADDPRODUITS,"1111");
+article.innerHTML =`<article class="cart__item" id="${KEY}" data-color="${keyColor}">
+<div class="cart__item__img">
+  <img src="${produitData.imageUrl}" alt="${produitData.altTxt}">
+</div>
+<div class="cart__item__content">
+  <div class="cart__item__content__description">
+    <h2>${produitData.name}</h2>
+    <p>${keyColor}</p>
+    <p>${produitData.price}$</p>
+  </div>
+  <div class="cart__item__content__settings">
+    <div class="cart__item__content__settings__quantity">
+      <p>Qté : </p>
+      <input type="number" class="itemQuantity" id="itemQuantity" name="${KEY}" min="1" max="100" value="${idCouleur.quantite}">
+    </div>
+    <div class="cart__item__content__settings__delete">
+      <p class="deleteItem" id="${KEY}" >Supprimer</p>
+    </div>
+  </div>
+</div>
+</article>`;
+cart__items.append( article ); 
+ let boutons = document.getElementsByClassName("itemQuantity"); 
 
-cart__items.innerHTML = ADDPRODUITS.map((produit) => 
- `<article class="cart__item" data-id="${produit._id}" data-color="${produit.couleur}">
- <div class="cart__item__img">
-   <img src="${produit.imageUrl}" alt="${produit.altTxt}">
- </div>
- <div class="cart__item__content">
-   <div class="cart__item__content__description">
-     <h2>${produit.name}</h2>
-     <p>${produit.couleur}</p>
-     <p>${produit.price}$</p>
-   </div>
-   <div class="cart__item__content__settings">
-     <div class="cart__item__content__settings__quantity">
-       <p>Qté : </p>
-       <input type="number" class="itemQuantity" id="itemQuantity" name="itemQuantity" min="1" max="100" value="${produit.quantite}">
-     </div>
-     <div class="cart__item__content__settings__delete">
-       <p class="deleteItem" id="${produit._id}" >Supprimer</p>
-     </div>
-   </div>
- </div>
- </article>`,).join("");
- ///////////////////////////////////////////////////////////////////////////////////////////////
-///////////Manipulation panier
-      let boutons = document.getElementsByClassName("itemQuantity");
-       for (let b = 0; b < boutons.length; b++) {
-     boutons[b].addEventListener("input",() => {
-      console.log(boutons[b].value);
-     })};
+      
+boutons[i].addEventListener("input", async (e) => {
+ 
+  await fetch(`http://localhost:3000/api/products/${keyId}`)
+  .then((res) => res.json())
+  .then((promise) => {
+      produitData = promise;});
+console.log(produitData._id,produitData.price);
+envoieQuantiteLocal = {quantite:e.target.value};
+  localStorage.setItem(key,JSON.stringify(envoieQuantiteLocal));
 
-/////////////////////////////////////////::::::
-/////Supprimer produit
-
-  let poubelles = document.getElementsByClassName("deleteItem");
-  for (let p = 0; p < poubelles.length; p++) {
-    poubelles[p].addEventListener("click",() => { 
-  console.log(poubelles[p]);})}
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-//Total panier
-let quantitePanier = [];
-let prixPanier = []; 
-ADDPRODUITS.map((produit) => { 
-let calculPanier = (produit.price * produit.quantite);
-  prixPanier.push(calculPanier);
-  quantitePanier.push(produit.quantite);
-  totalQuantity.textContent = `${eval(quantitePanier.join("+"))}`;
-totalPrice.textContent = `${eval(prixPanier.join("+"))}`;
-});
-};
-
-   Recuperation();
+  quantitePanier = quantitePanier - parseInt(idCouleur.quantite, 10);
+prixPanier = prixPanier - parseInt(idCouleur.quantite, 10) * parseInt(produitData.price,10) ;
+idCouleur.quantite = e.target.value;
+quantitePanier = quantitePanier + parseInt(e.target.value, 10);
+prixPanier = prixPanier + parseInt(e.target.value, 10) * parseInt(produitData.price,10) ;
+totalQuantity.innerText = `${quantitePanier}`;
+    totalPrice.innerText = `${prixPanier}`;
+  });
 
 
-
-
-
+ }
+ 
+ 
  
 
+  
 
- 
+totalQuantity.innerText = `${quantitePanier}`;
+    totalPrice.innerText = `${prixPanier}`;
+}; 
+ RECUPERATION();
+  /* 
+quantitePanier =  parseInt(idCouleur.quantite, 10)  ; 
+        prixPanier = prixPanier + parseInt(idCouleur.quantite, 10) * parseInt(produitData.price,10) ;
+        totalQuantity.innerText = `${quantitePanier}`;
+        totalPrice.innerText = `${prixPanier}`;
+console.log(quantitePanier,"1111");
+console.log(prixPanier,"22222");
+
+
+   
+  
+*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////Formulaire
@@ -98,25 +106,25 @@ COMMANDER.formAction = "./confirmation.html";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////Controle value
-PRENOM.addEventListener("input",function(e) {
-  let valuePrenom = e.target.value ;
- console.log(valuePrenom);
+PRENOM.addEventListener("input",()=> {
+  
+ console.log(PRENOM.value);
 });
-NOM.addEventListener("input",function(e) {
-  let valueNom = e.target.value;
-  console.log(valueNom);
+NOM.addEventListener("input",()=> {
+  
+  console.log(NOM.value);
 });
-ADRESSE.addEventListener("input",function(e) {
-  let valueAdresse = e.target.value;
-  console.log(valueAdresse);
+ADRESSE.addEventListener("input",()=>{
+  
+  console.log(ADRESSE.value);
 });
-VILLE.addEventListener("input",function(e) {
-  let valueVille = e.target.value;
-  console.log(valueVille);
+VILLE.addEventListener("input",()=>{
+
+  console.log(VILLE.value);
 });
-EMAIL.addEventListener("input",function(e) {
-  let valueEmail = e.target.value;
-  console.log(valueEmail);
+EMAIL.addEventListener("input",()=> {
+  
+  console.log(EMAIL.value);
 });
 
 
