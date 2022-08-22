@@ -50,14 +50,14 @@ const envoieAuPanier = async () => {
         let quantiteTableau = [];
         quantiteTableau.push(quantite.value,quantiteActuel);  
        let quantiteFinal= `${eval(quantiteTableau.join("+"))}`;
-        let majPanier = {couleur:select.value,quantite:quantiteFinal};
+        let majPanier = {quantite:quantiteFinal};
        
         localStorage.setItem(PRODUIT+select.value,JSON.stringify(Object.assign(majPanier)) );
          console.log(JSON.parse(localStorage.getItem(PRODUIT+select.value)));
     } else {
         console.log("nouveau") ;
 
-        let nouveauPanier = {couleur:select.value,quantite:quantite.value};
+        let nouveauPanier = {quantite:quantite.value};
         localStorage.setItem(PRODUIT+select.value,JSON.stringify(Object.assign(nouveauPanier)));
 
         console.log(JSON.parse(localStorage.getItem(PRODUIT+select.value)));
