@@ -142,26 +142,27 @@ EMAIL.addEventListener("input",()=> {
   //if (PRENOM.value,NOM.value,ADRESSE.value,VILLE.value,EMAIL.value != ("")  ) {
 
   const FORMULAIRE = {
-    contact:{
+    contact: {
     firstName:PRENOM.value,
     lastName:NOM.value,
     adress:ADRESSE.value,
     city:VILLE.value,
-    email:EMAIL.value
-  },products:idProduits,};
+    email:EMAIL.value,
+  },
+  products:idProduits,};
 
   localStorage.setItem("formulaire",JSON.stringify(FORMULAIRE));
+  console.log(FORMULAIRE,"formulaire");
 /////////////////////ENVOIE LOCALStorage FONCTIONNE
-  fetch("http://localhost:3000/api/products/order",{
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(FORMULAIRE)
-}).then((res) => res.json()).then((promise) => {
-      let reponseServer = promise;
-      console.log(reponseServer,"reponseServer");});
-///////      LA REPONSESERVER EST VIDE        /////////
+fetch('http://localhost:3000/api/products',{
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(FORMULAIRE),
+}).then((res) => {console.log(res);});
 
-/*
+/* let reponseServer = promise;
+      console.log(reponseServer,"reponseServer");});
+
 }else {
   console.log("Remplir le formulaire")}*/});
 }; 
