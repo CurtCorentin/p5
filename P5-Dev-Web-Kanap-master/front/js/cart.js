@@ -154,7 +154,7 @@ EMAIL.addEventListener("input",()=> {
   localStorage.setItem("formulaire",JSON.stringify(FORMULAIRE));
   console.log(FORMULAIRE,"formulaire");
 /////////////////////ENVOIE LOCALStorage FONCTIONNE
-fetch('http://localhost:3000/api/products',{
+fetch('http://localhost:3000/api/products/order',{
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(FORMULAIRE),
