@@ -86,7 +86,7 @@ totalQuantity.innerText = `${quantitePanier}`;
   
 
   const COMMANDER = document.getElementById("order");
-COMMANDER.formAction = "./confirmation.html";//!!/////////////////////////////////////////////////////////////////////////////////////
+COMMANDER.formAction = "";//!./confirmation.html!/////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////Controle value*
@@ -139,26 +139,29 @@ EMAIL.addEventListener("input",()=> {
 
   //if (PRENOM.value,NOM.value,ADRESSE.value,VILLE.value,EMAIL.value != ("")  ) {
 
-  const FORMULAIRE = [
-    {
-    contact: [{
+  const body ={
+   body : {
+
+   contact: {
     firstName:PRENOM.value,
     lastName:NOM.value,
-    adress:ADRESSE.value,
+    address:ADRESSE.value,
     city:VILLE.value,
     email:EMAIL.value,
-  }],
-  products:idProduits,}];
-
-  localStorage.setItem("formulaire",JSON.stringify(FORMULAIRE));
-  console.log(FORMULAIRE,"formulaire");
- 
+  },
+  products:idProduits}};
+//let form = document.getElementById("formulaire");
+ // let formData = new FormData(form); 
+ // formData.append("products",idProduits);
+  
+ localStorage.setItem("formulaire",JSON.stringify(body));
+ // sendFormadata
 /////////////////////ENVOIE LOCALStorage FONCTIONNE
 
 fetch("http://localhost:3000/api/products/order",{
     method: "post",
    
-    body: FORMULAIRE, 
+    body: JSON.stringify(body), 
 }).then((res) => {console.log(res);});
 
 /* 

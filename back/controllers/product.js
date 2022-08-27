@@ -47,6 +47,15 @@ exports.getOneProduct = (req, res, next) => {
  *
  */
 exports.orderProducts = (req, res, next) => {
+  if (!req.body.contact)return res.status(400).send(new Error('Bad contact!'));
+  if (!req.body.contact.firstName)return res.status(400).send(new Error('Bad firstname!'));
+  if (!req.body.contact.lastName)return res.status(400).send(new Error('Bad lastname!'));
+  if (!req.body.contact.address)return res.status(400).send(new Error('Bad adress!'));
+  if (!req.body.contact.city)return res.status(400).send(new Error('Bad city!'));
+  if (!req.body.contact.email)return res.status(400).send(new Error('Bad email!'));
+  if (!req.body.products)return res.status(400).send(new Error('Bad products'));
+  
+
   if (!req.body.contact ||
       !req.body.contact.firstName ||
       !req.body.contact.lastName ||
@@ -54,7 +63,7 @@ exports.orderProducts = (req, res, next) => {
       !req.body.contact.city ||
       !req.body.contact.email ||
       !req.body.products) {
-    return res.status(400).send(new Error('Bad request!'));
+    return res.status(400).send(new Error('Bad request!1111111111111'));
   }
   let queries = [];
   for (let productId of req.body.products) {
