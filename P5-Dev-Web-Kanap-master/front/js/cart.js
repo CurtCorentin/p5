@@ -1,6 +1,4 @@
 
-
-
 const RECUPERATION = async () => {
    let idProduits = []; 
    let prixPanier = 0;
@@ -88,11 +86,11 @@ totalQuantity.innerText = `${quantitePanier}`;
   
 
   const COMMANDER = document.getElementById("order");
-COMMANDER.formAction = "";//!./confirmation.html!/////////////////////////////////////////////////////////////////////////////////////
+COMMANDER.formAction = "./confirmation.html";//!!/////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////
-/*Controle value*
+//////////////Controle value*
+/*
 PRENOM.addEventListener("input",()=> {
   if(PRENOM.value.match(/^[a-zA-Z]{3,25}$/)){
  console.log(PRENOM.value);
@@ -134,8 +132,8 @@ EMAIL.addEventListener("input",()=> {
   }
 });
 
-
-*///////////////////////////////////////////////////////////////////////////////////////////////
+*/
+//////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////Recuperation value et Envoie localStorage
    COMMANDER.addEventListener("click", () => { 
 
@@ -153,20 +151,22 @@ EMAIL.addEventListener("input",()=> {
 
   localStorage.setItem("formulaire",JSON.stringify(FORMULAIRE));
   console.log(FORMULAIRE,"formulaire");
+ 
 /////////////////////ENVOIE LOCALStorage FONCTIONNE
-fetch('http://localhost:3000/api/products/order',{
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(FORMULAIRE),
+
+fetch("http://localhost:3000/api/products/order",{
+    method: "post",
+   
+    body: FORMULAIRE, 
 }).then((res) => {console.log(res);});
 
-/* let reponseServer = promise;
-      console.log(reponseServer,"reponseServer");});
-
+/* 
 }else {
   console.log("Remplir le formulaire")}*/});
 }; 
  RECUPERATION();
+
+ 
 
 
 

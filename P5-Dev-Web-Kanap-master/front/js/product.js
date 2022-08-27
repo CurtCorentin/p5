@@ -2,8 +2,6 @@
 const PRODUIT = window.location.search.split('?').join("")  ;
 console.log(PRODUIT) ;
 
-
-
 const FETCHPRODUITS = async () => { 
     await fetch(`http://localhost:3000/api/products/${PRODUIT}`)
     .then((res) => res.json())
