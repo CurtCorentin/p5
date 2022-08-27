@@ -139,15 +139,16 @@ EMAIL.addEventListener("input",()=> {
 
   //if (PRENOM.value,NOM.value,ADRESSE.value,VILLE.value,EMAIL.value != ("")  ) {
 
-  const FORMULAIRE = {
-    contact: {
+  const FORMULAIRE = [
+    {
+    contact: [{
     firstName:PRENOM.value,
     lastName:NOM.value,
     adress:ADRESSE.value,
     city:VILLE.value,
     email:EMAIL.value,
-  },
-  products:idProduits,};
+  }],
+  products:idProduits,}];
 
   localStorage.setItem("formulaire",JSON.stringify(FORMULAIRE));
   console.log(FORMULAIRE,"formulaire");
