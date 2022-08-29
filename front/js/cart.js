@@ -90,7 +90,6 @@ COMMANDER.formAction = "./confirmation.html";//!!///////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////Controle value*
-/*
 PRENOM.addEventListener("input",()=> {
   if(PRENOM.value.match(/^[a-zA-Z]{3,25}$/)){
  console.log(PRENOM.value);
@@ -131,15 +130,12 @@ EMAIL.addEventListener("input",()=> {
     emailErrorMsg.innerText=`Remplir correctement svp`;
   }
 });
-*/
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////Recuperation value et Envoie localStorage
    COMMANDER.addEventListener("click", () => { 
 
 if (PRENOM.value,NOM.value,ADRESSE.value,VILLE.value,EMAIL.value != ("")  ) {
-
-  
   const body ={
    contact: {
     firstName:PRENOM.value,
@@ -151,9 +147,7 @@ if (PRENOM.value,NOM.value,ADRESSE.value,VILLE.value,EMAIL.value != ("")  ) {
   products:idProduits};
 
  console.log(JSON.stringify(body),"body");
- //
-
-
+ 
 fetch('http://localhost:3000/api/products/order', {
 method: 'POST',
 body: JSON.stringify(body),
