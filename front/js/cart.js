@@ -86,7 +86,7 @@ totalQuantity.innerText = `${quantitePanier}`;
   
 
   const COMMANDER = document.getElementById("order");
-COMMANDER.formAction = "";//!./confirmation.html!/////////////////////////////////////////////////////////////////////////////////////
+COMMANDER.formAction = "./confirmation.html";//!!/////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////Controle value*
@@ -131,17 +131,16 @@ EMAIL.addEventListener("input",()=> {
     emailErrorMsg.innerText=`Remplir correctement svp`;
   }
 });
-
 */
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////Recuperation value et Envoie localStorage
    COMMANDER.addEventListener("click", () => { 
 
-  //if (PRENOM.value,NOM.value,ADRESSE.value,VILLE.value,EMAIL.value != ("")  ) {
+if (PRENOM.value,NOM.value,ADRESSE.value,VILLE.value,EMAIL.value != ("")  ) {
 
+  
   const body ={
-   body : {
-
    contact: {
     firstName:PRENOM.value,
     lastName:NOM.value,
@@ -149,24 +148,22 @@ EMAIL.addEventListener("input",()=> {
     city:VILLE.value,
     email:EMAIL.value,
   },
-  products:idProduits}};
-//let form = document.getElementById("formulaire");
- // let formData = new FormData(form); 
- // formData.append("products",idProduits);
-  
- localStorage.setItem("formulaire",JSON.stringify(body));
- // sendFormadata
-/////////////////////ENVOIE LOCALStorage FONCTIONNE
+  products:idProduits};
 
-fetch("http://localhost:3000/api/products/order",{
-    method: "post",
-   
-    body: JSON.stringify(body), 
-}).then((res) => {console.log(res);});
+ console.log(JSON.stringify(body),"body");
+ //
 
-/* 
+
+fetch('http://localhost:3000/api/products/order', {
+method: 'POST',
+body: JSON.stringify(body),
+headers: { 'Content-Type': 'application/json' }
+}).then(res => res.json())
+  .then(json => {localStorage.setItem("commander",JSON.stringify(json));
+console.log(json,"reponse envoyer");});
+
 }else {
-  console.log("Remplir le formulaire")}*/});
+console.log("Remplir le formulaire");}});
 }; 
  RECUPERATION();
 
