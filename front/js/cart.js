@@ -86,12 +86,12 @@ totalQuantity.innerText = `${quantitePanier}`;
   
 
   const COMMANDER = document.getElementById("order");
-COMMANDER.formAction = "./confirmation.html";//!!/////////////////////////////////////////////////////////////////////////////////////
+//COMMANDER.formAction = "./confirmation.html";//!!/////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////Controle value*
 PRENOM.addEventListener("input",()=> {
-  if(PRENOM.value.match(/^[a-zA-Z]{3,25}$/)){
+  if(PRENOM.value.match(/^[a-zA-Z]{3,}/)){
  console.log(PRENOM.value);
  firstNameErrorMsg.innerText=``;
 }else{
@@ -99,7 +99,7 @@ PRENOM.addEventListener("input",()=> {
 }
 });
 NOM.addEventListener("input",()=> {
-  if(NOM.value.match(/^[a-zA-Z]{3,25}$/)){
+  if(NOM.value.match(/^[a-zA-Z]{3,}/)){
    console.log(NOM.value); 
    lastNameErrorMsg.innerText=``;
 }else{
@@ -107,7 +107,7 @@ NOM.addEventListener("input",()=> {
 }
 });
 ADRESSE.addEventListener("input",()=>{
-  if(ADRESSE.value.match(/^[0-9]{1,3} [a-zA-Z]{3,25}$/)){
+  if(ADRESSE.value.match(/^[1-9]{1,4} [\w, ]{1,}/)){
    console.log(ADRESSE.value); 
    addressErrorMsg.innerText=``;
   }else{
@@ -115,7 +115,7 @@ ADRESSE.addEventListener("input",()=>{
   }
 });
 VILLE.addEventListener("input",()=>{
-  if(VILLE.value.match(/^[a-zA-Z]{3,25}$/)){
+  if(VILLE.value.match(/^[a-zA-Z]{3,}/)){
    console.log(VILLE.value); 
    cityErrorMsg.innerText=``;
 }else{
@@ -154,7 +154,8 @@ body: JSON.stringify(body),
 headers: { 'Content-Type': 'application/json' }
 }).then(res => res.json())
   .then(json => {localStorage.setItem("commander",JSON.stringify(json));
-console.log(json,"reponse envoyer");});
+location.href = "./confirmation.html"
+  console.log(json,"reponse envoyer");});
 
 }else {
 console.log("Remplir le formulaire");}});
