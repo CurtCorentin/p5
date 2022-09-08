@@ -15,8 +15,7 @@ const RECUPERATION = async () => {
  idProduits.push(keyId);
      await fetch(`http://localhost:3000/api/products/${keyId}`)
   .then((res) => res.json())
-  .then((promise) => {
-      produitData = promise;});
+  .then((promise) => {produitData = promise;});
 
 prixPanier = prixPanier+ parseInt(idCouleur.quantite, 10) * parseInt(produitData.price,10);
 
@@ -45,20 +44,23 @@ article.innerHTML =`<article class="cart__item" id="${key}" data-color="${keyCol
 </article>`;
 cart__items.append( article ); 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////Suppression article et gestion panier
  let boutons = document.getElementsByClassName("itemQuantity"); 
+let supprimer = document.getElementsByClassName("deleteItem");
+console.log(supprimer,"supprimer");
+let articlesRemoved = document.getElementById(key);
+console.log(articlesRemoved,"articles");
 
 boutons[i].addEventListener("input", async (e) => {
- 
   await fetch(`http://localhost:3000/api/products/${keyId}`)
   .then((res) => res.json())
   .then((promise) => {
       produitData = promise;});
-
 console.log(key,produitData.price);
 
 envoieQuantiteLocal = {quantite:e.target.value};
   localStorage.setItem(key,JSON.stringify(envoieQuantiteLocal));
-
   quantitePanier = quantitePanier - parseInt(idCouleur.quantite, 10);
 prixPanier = prixPanier - parseInt(idCouleur.quantite, 10) * parseInt(produitData.price,10) ;
 
@@ -66,13 +68,24 @@ idCouleur.quantite = e.target.value;
 
 quantitePanier = quantitePanier + parseInt(e.target.value, 10);
 prixPanier = prixPanier + parseInt(e.target.value, 10) * parseInt(produitData.price,10) ;
-
 totalQuantity.innerText = `${quantitePanier}`;
     totalPrice.innerText = `${prixPanier}`;
   });
 
- }/////////////.................fin de boucle
- 
+supprimer[i].addEventListener("click", async (e) => { 
+  await fetch(`http://localhost:3000/api/products/${keyId}`)
+  .then((res) => res.json())
+  .then((promise) => {
+      produitData = promise;});
+
+  quantitePanier = quantitePanier - parseInt(idCouleur.quantite, 10);
+  prixPanier = prixPanier - parseInt(idCouleur.quantite, 10) * parseInt(produitData.price,10) ;
+localStorage.removeItem(articlesRemoved.id);
+articlesRemoved.remove(); 
+console.log(articlesRemoved,"articlesRemoved");
+  totalQuantity.innerText = `${quantitePanier}`;
+      totalPrice.innerText = `${prixPanier}`;});
+    }///////////////////////////////////////////////////////////////////.................fin de boucle
 totalQuantity.innerText = `${quantitePanier}`;
     totalPrice.innerText = `${prixPanier}`;
 
@@ -83,53 +96,40 @@ totalQuantity.innerText = `${quantitePanier}`;
   const ADRESSE = document.getElementById("address");
   const VILLE = document.getElementById("city");
   const EMAIL = document.getElementById("email");
-  
-
   const COMMANDER = document.getElementById("order");
-//COMMANDER.formAction = "./confirmation.html";//!!/////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////Controle value*
+//////////////Controle value 
+
 PRENOM.addEventListener("input",()=> {
   if(PRENOM.value.match(/^[a-zA-Z]{3,}/)){
  console.log(PRENOM.value);
  firstNameErrorMsg.innerText=``;
-}else{
-  firstNameErrorMsg.innerText=`Remplir correctement svp`;
-}
-});
+}else{firstNameErrorMsg.innerText=`Remplir correctement svp`;}});
+
 NOM.addEventListener("input",()=> {
   if(NOM.value.match(/^[a-zA-Z]{3,}/)){
    console.log(NOM.value); 
    lastNameErrorMsg.innerText=``;
-}else{
-  lastNameErrorMsg.innerText=`Remplir correctement svp`;
-}
-});
+}else{lastNameErrorMsg.innerText=`Remplir correctement svp`;}});
+
 ADRESSE.addEventListener("input",()=>{
   if(ADRESSE.value.match(/^[1-9]{1,4} [\w, ]{1,}/)){
    console.log(ADRESSE.value); 
    addressErrorMsg.innerText=``;
-  }else{
-    addressErrorMsg.innerText=`Remplir correctement svp`;
-  }
-});
+  }else{addressErrorMsg.innerText=`Remplir correctement svp`;}});
+
 VILLE.addEventListener("input",()=>{
   if(VILLE.value.match(/^[a-zA-Z]{3,}/)){
    console.log(VILLE.value); 
    cityErrorMsg.innerText=``;
-}else{
-  cityErrorMsg.innerText=`Remplir correctement svp`;
-}
-});
+}else{cityErrorMsg.innerText=`Remplir correctement svp`;}});
+
 EMAIL.addEventListener("input",()=> {
   if(EMAIL.value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)){
     console.log(EMAIL.value); 
     emailErrorMsg.innerText=``;
-  }else{
-    emailErrorMsg.innerText=`Remplir correctement svp`;
-  }
-});
+  }else{emailErrorMsg.innerText=`Remplir correctement svp`;}});
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////Recuperation value et Envoie localStorage
