@@ -7,7 +7,7 @@ orderId.innerText = `${CONFIRMATION.orderId}`;
 for (i=0; i<localStorage.length; i++)  ///////////////////////boucle
 {  
    let key = localStorage.key(i);
-localStorage.removeItem(key);
+localStorage.removeItem(i);
 };
 
 localStorage.removeItem("commander");
